@@ -258,3 +258,46 @@
         "data": "Certificate History Is Not Found For The Tracking Id : 1"
     }
 ```
+
+7. ## Verify Certificate By Certificate Hash
+    - **Endpoint:** /verify-by-hash
+    - **Method:** GET
+    - **Description:**  Verifies a certificate by its hash
+    - **Request Body:**
+```javascript
+        {
+            "certificate_hash": "aakbashdbkhdsjh..."
+        }
+
+```
+- certificate_hash (string): The hash of the certificate.
+
+- **Response**:
+    - **200 OK:** Request successfully retrieved
+```javascript
+            {
+                "data": {
+                    "track_id": "1",
+                    "student_name": "John Doe",
+                    "student_id": "123456",
+                    "degree": "Bachelor of Science",
+                    "major": "Computer Science",
+                    "result": "3.25",
+                    ...
+                }
+            }
+```
+-  **400 Bad Request:** Required certificate hash is missing
+
+```javascript
+    {
+        "data": "Required Certificate hash Is Missing"
+    }
+
+```
+-  **500 Internal Server Error:** Certificate not found for the given hahs.
+```javascript
+    {
+        "data": "Certificate Not Found For The Id aakbashdbkhdsjh....."
+    }
+```
