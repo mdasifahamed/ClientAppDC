@@ -1,8 +1,8 @@
 const express = require('express')
-const app = express()
 const bodyParser = require('body-parser')
-const port = 9000
 const contract = require('./contract.js')
+const app = express()
+const port = 9000
 app.use(bodyParser.json())
 
 
@@ -120,6 +120,23 @@ app.get('/history-of-certificate',async (req,res)=>{
     } catch (error) {
         if (error) {
             return res.status(500).json({data:`Certficate History Is Not Found For The Tracking Id : ${tracking_id}`})
+        }
+    }
+})
+
+app.get('/verify-by-hash', async(req,res)=>{
+    
+    let certificate_hash = req.body.certificate_hash
+    if(!certificate_hash){
+        return res.status(400).json({data:"Required Certificate Hash Is Missing"})
+    }
+    try {
+        let result = await contract.verify_by_hash(certificate_hash.toString())
+        return res.status(200).json({data:JSON.parse(result)})
+    } catch (error) {
+
+        if (error) {
+            return res.status(500).json({data:`Certificate Not Found For The Hash ${certificate_hash}`})
         }
     }
 })

@@ -126,18 +126,28 @@ async function history_of_a_request(tracking_id){
             client.close()
         }
 }
-// // async function main() {
 
-    
-// //     let result = await get_all_request()
-// //     if(!result){
-// //         console.log("Nothing");
-// //     }else{
-// //         console.log("true");
-// //     }
-// // }
 
-// main()
+async function verify_by_hash(hash) {
+    const {gateway,client} = await connect_gateway()
+        try {
+            const network = await gateway.getNetwork(channelName)
+            const contract = await network.getContract(chaincodeName)
+            let trx = await contract.evaluateTransaction('VerifyCertificateByCertificateHash', hash.toString())
+            trx = utf8Decoder.decode(trx)
+            return trx
+        } catch (error) {
+
+            if (error) {
+                return "Something Went Wrong"
+            }
+        } finally {
+            gateway.close()
+
+            client.close()
+        }
+
+}
 
 module.exports={
     submit_request,
@@ -145,4 +155,5 @@ module.exports={
     get_all_request,
     history_of_a_request,
     read_certificate_by_certid,
+    verify_by_hash
 }
