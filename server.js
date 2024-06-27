@@ -5,7 +5,7 @@ const contract = require('./contract.js')
 const app = express()
 const port = 9000
 let corsOptions = {
-    origin : ['*']
+    origin : '*'
 }
 app.use(bodyParser.json())
 app.use(cors(corsOptions))
