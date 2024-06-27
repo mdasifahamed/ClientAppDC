@@ -90,7 +90,7 @@
 
 3. ## Read Request by Tracking ID (Alternate)
     - **Endpoint:** /read-request
-    - **Method:** GET
+    - **Method:** POST
     - **Description:** Reads a request from the blockchain network using a tracking ID provided in the request body.
     - **Request Body:**
 ```javascript
@@ -173,7 +173,7 @@
 
 5. ## Read Request by Tracking ID (Alternate)
     - **Endpoint:** /read-certificate-by-id
-    - **Method:** GET
+    - **Method:** POST
     - **Description:**  Reads a certificate from the blockchain network using a certificate ID.
     - **Request Body:**
 ```javascript
@@ -216,7 +216,7 @@
 
 6. ## History of Certificate
     - **Endpoint:** /history-of-certificate
-    - **Method:** GET
+    - **Method:** POST
     - **Description:**  Retrieves the history of a certificate from the blockchain network using a tracking ID.
     - **Request Body:**
 ```javascript
@@ -261,7 +261,7 @@
 
 7. ## Verify Certificate By Certificate Hash
     - **Endpoint:** /verify-by-hash
-    - **Method:** GET
+    - **Method:** POST
     - **Description:**  Verifies a certificate by its hash
     - **Request Body:**
 ```javascript
