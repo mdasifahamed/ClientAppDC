@@ -6,7 +6,7 @@ const app = express()
 const port = 9000
 let corsOptions = {
     origin : ['http://localhost:3000'],
- }
+}
 app.use(bodyParser.json())
 app.use(cors(corsOptions))
 
