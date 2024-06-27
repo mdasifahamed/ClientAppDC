@@ -81,7 +81,7 @@ app.post('/read-request',async (req,res)=>{
     }
 })
 
-app.get('/get-all-the-request', async(req,res)=>{
+app.get('/get-all-the-request', cors(corsOptions), async(req,res)=>{
 
     try {
         const result = await contract.get_all_request()
