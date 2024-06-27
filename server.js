@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.use(cors(corsOptions))
 
 
-app.post('/submit-request', async (req , res)=> {
+app.post('/submit-request',cors(corsOptions), async (req , res)=> {
    
     if( !req.body.student_name || !req.body.student_id || 
         !req.body.degree || !req.body.major || !req.body.result){
