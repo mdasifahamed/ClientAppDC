@@ -4,20 +4,18 @@ const cors = require('cors')
 const contract = require('./contract.js')
 const app = express()
 const port = 9000
+
 let corsOptions = {
-    origin : '*'
+    origin : '*',
+    optionsSuccessStatus: 200
 }
+
 app.use(bodyParser.json())
 app.use(cors(corsOptions))
 
 
-
-app.listen(port,() => {
-    console.log(`Server is running on port ${port}`);
-});
-
-// api for submitting request
 app.post('/submit-request', async (req , res)=> {
+   
     if( !req.body.student_name || !req.body.student_id || 
         !req.body.degree || !req.body.major || !req.body.result){
 
@@ -167,4 +165,8 @@ app.post('/verify-by-hash', async(req,res)=>{
         }
     }
 })
+
+app.listen(port,() => {
+    console.log(`Server is running on port ${port}`);
+});
 
