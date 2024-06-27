@@ -24,6 +24,12 @@ app.post('/submit-request',cors(corsOptions), async (req , res)=> {
     let track_id
     try {
         let requests = await contract.get_all_request()
+
+        if(requests === "Something Went Wrong"){
+            
+            return res.status(500).json({data:"Failed To Connect The Blokchain Network"})
+        }
+
         if (!requests){
             track_id = 1;
         } else {
