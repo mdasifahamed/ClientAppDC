@@ -4,8 +4,11 @@ const cors = require('cors')
 const contract = require('./contract.js')
 const app = express()
 const port = 9000
+let corsOptions = {
+    origin : ['http://localhost:3000'],
+ }
 app.use(bodyParser.json())
-app.use(cors({credentials:true,origin:true}))
+app.use(cors(corsOptions))
 
 
 
