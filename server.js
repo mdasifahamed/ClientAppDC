@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const contract = require('./contract.js')
 const app = express()
-const port = 9000
+const port = 9001
 
 let corsOptions = {
     origin : '*',
