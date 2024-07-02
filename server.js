@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const validator = require('validator')
 const cors = require('cors')
 const contract = require('./contract.js')
 const app = express()
@@ -17,9 +18,12 @@ app.use(cors(corsOptions))
 app.post('/submit-request',cors(corsOptions), async (req , res)=> {
    
     if( !req.body.student_name || !req.body.student_id || 
-        !req.body.degree || !req.body.major || !req.body.result){
+        !req.body.student_email || !req.body.degree || !req.body.major || !req.body.result ){
 
         return res.status(400).json({data:"Missing required fields"})
+    }
+    if(! validator.isEmail(req.body.student_email)){
+        return res.status(400).json({data:"Invalid Email Address"})
     }
     let track_id
     try {
@@ -41,14 +45,16 @@ app.post('/submit-request',cors(corsOptions), async (req , res)=> {
         console.log(error)
         return res.status(500).json({data:"Failed To Connect The Blokchain Network"})
     }
+
+
         
     try{
         const response = await contract.submit_request(track_id.toString(),req.body.student_name,
-        req.body.student_id,req.body.degree ,req.body.major,req.body.result)
+        req.body.student_id, req.body.student_email,req.body.degree ,req.body.major,req.body.result)
         return res.status(200).json({data:JSON.parse(response)});
 
     }catch(err){
-
+        console.log(err)
         return res.status(500).json({data:"Failed To Connect The Blokchain Network"})
     }
         

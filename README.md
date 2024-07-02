@@ -8,6 +8,7 @@
             {
                 "student_name": "John Doe",
                 "student_id": "123456",
+                "student_email": "mdasifahamedfahim@gmail.com",
                 "degree": "Bachelor of Science",
                 "major": "Computer Science",
                 "result": "3.25"

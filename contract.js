@@ -6,13 +6,14 @@ const chaincodeName = 'basic';
  * @param {string} tacking_id The date
  * @param {string} student_name The string
  * @param {string} student_id The string
+ * @param {string} student_email The string
  * @param {string} degree The string
  * @param {string} major The string
  * @param {float} result The string
  */
-async function submit_request(tracking_id,student_name,student_id,degree,major,result){
+async function submit_request(tracking_id,student_name,student_id,student_email,degree,major,result){
     student_id = parseInt(student_id)
-    result = parseFloat(result)
+    result = parseFloat(result).toFixed(2)
 
     const {gateway,client} = await connect_gateway()
      
@@ -23,6 +24,7 @@ async function submit_request(tracking_id,student_name,student_id,degree,major,r
                 tracking_id,
                 student_name,
                 student_id.toString(),
+                student_email.toString(),
                 degree,
                 major,
                 result.toString()
@@ -31,6 +33,7 @@ async function submit_request(tracking_id,student_name,student_id,degree,major,r
             return trx
         } catch (error) {
             if (error) {
+                console.log(error)
                 return "Something Went Wrong"
             }
         } finally {
@@ -59,6 +62,7 @@ async function read_request(tracking_id){
             return trx
         } catch (error) {
             if (error) {
+                console.log(error)
                 return "Something Went Wrong"
             }
         } finally {
@@ -77,6 +81,7 @@ async function get_all_request(){
             return trx
         } catch (error) {
             if (error) {
+                console.log(error)
                 return "Something Went Wrong"
             }
         } finally {
