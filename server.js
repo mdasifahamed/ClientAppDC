@@ -124,7 +124,10 @@ app.post('/read-certificate-by-id',async(req,res)=>{
 
     try {
         const certificate = await contract.read_certificate_by_certid(cert_id.toString())
-        return res.status(200).json({data:JSON.parse(certificate)})
+        let cert = JSON.parse(certificate);
+        cert.Requester_Authority = "Dhaka College";
+        cert.Issuer_Authority = "Dhaka University";
+        return res.status(200).json({data:cert})
     } catch (error) {
         if (error) {
             return res.status(500).json({data:`Certificate Not Found For The Id ${cert_id}`})
@@ -169,11 +172,62 @@ app.post('/verify-by-hash', async(req,res)=>{
     }
     try {
         let result = await contract.verify_by_hash(certificate_hash.toString())
-        return res.status(200).json({data:JSON.parse(result)})
+        let cert = JSON.parse(result);
+        cert.Requester_Authority = "Dhaka College";
+        cert.Issuer_Authority = "Dhaka University";
+        return res.status(200).json({data:cert})
     } catch (error) {
 
         if (error) {
             return res.status(500).json({data:`Certificate Not Found For The Hash ${certificate_hash}`})
+        }
+    }
+})
+
+
+app.get('/read-certificate-by-id/:certificate_id', cors(corsOptions), async(req,res)=>{
+
+    let cert_id = req.params.certificate_id
+
+    
+
+    try {
+        const certificate = await contract.read_certificate_by_certid(cert_id.toString())
+        let cert = JSON.parse(certificate);
+        cert.Requester_Authority = "Dhaka College"
+        cert.Issuer_Authority = "Dhaka University"
+        return res.status(200).json({data:cert})
+    } catch (error) {
+        if (error) {
+            return res.status(500).json({data:`Certificate Not Found For The Id ${cert_id}`})
+        }
+    }
+})
+
+app.get('/history-of-certificate/:tracking_id', cors(corsOptions),async (req,res)=>{
+
+    let tracking_id = req.params.tracking_id
+    if(!tracking_id){
+        return res.status(400).json({data:"Required Fields Tracking_Id  Is  Missing"})
+    }
+
+    try {
+        let request_history =  await contract.history_of_a_request(tracking_id.toString())
+        let requests = JSON.parse(request_history)
+        requests.forEach(request =>{
+            if(request.Is_Reqeust_Completed){
+                request.Requester_Authority = "Dhaka College"
+                request.Issuer_Authority = "Dhaka Univertsity"
+            } else {
+                request.Requester_Authority = "Dhaka College"
+            }
+        })
+        
+        return res.status(200).json({data:requests})
+
+    } catch (error) {
+        if (error) {
+            return res.status(500).json({data:`Certficate History Is Not Found For The Tracking Id : ${tracking_id}`})
         }
     }
 })
